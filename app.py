@@ -14,7 +14,7 @@ import os
 load_dotenv()
 
 # Set page configuration with a page icon loaded from a file or fallback to an emoji
-page_icon_path =  Path("/Users/a.mohammadsadiq/Documents/Git/DBQuery-AI-Assistant/images/Page Icon.webp")
+page_icon_path =  Path("images/Page Icon.webp")
 
 # Try to read the icon file, fallback to an emoji if file is not found
 try:
@@ -50,6 +50,7 @@ else:
 
 # Fetch the API key from environment variables
 api_key = os.getenv("GROQ_API_KEY")
+print(f"Loaded API Key: {api_key}")  # Debug print to check API Key
 
 if not db_uri:
     st.info("Please enter the database information and URI.")
@@ -114,4 +115,3 @@ if user_query:
         # Add assistant's response to message history and display it
         st.session_state.messages.append({"role": "assistant", "content": response})
         st.write(response)
-
