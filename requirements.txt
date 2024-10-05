@@ -3,3 +3,5 @@ langchain
 SQLAlchemy
 mysql-connector-python
 langchain-groq
+langchain-community
+python-dotenv
