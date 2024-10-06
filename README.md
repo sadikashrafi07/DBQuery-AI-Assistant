@@ -81,12 +81,13 @@ Interacting with databases often requires knowledge of SQL, which can be challen
 
 2. **Run the Docker container**:
    ```bash
-   docker run -p 8501:8501 sadiq07/dbquery-ai-assistant
+   docker run -d -p 80:8501 --env-file .env sadiq07/dbquery-ai-assistant
    ```
 
 3. **Access the application**:
    - Visit `http://localhost:8501` in your browser.
 
+> **Note**: Ensure that your .env file is in the same directory where you run the docker run command. This file should contain any necessary environment variables for your application to function correctly.
 
 ### MySQL Integration
 
