@@ -92,7 +92,8 @@ toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 agent = create_sql_agent(
     llm=llm,
     toolkit=toolkit,
-    verbose=False,  # Disable verbose mode to reduce overhead
+    verbose=False,
+    handle_parsing_errors=True,  # Disable verbose mode to reduce overhead
     max_iterations=40,  # Increase the number of iterations
     max_execution_time=150  # Increase the time limit (in seconds)
 )
