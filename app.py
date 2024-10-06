@@ -50,7 +50,7 @@ else:
 
 # Fetch the API key from environment variables
 api_key = os.getenv("GROQ_API_KEY")
-print(f"Loaded API Key: {api_key}")  # Debug print to check API Key
+st.write(f"Loaded API Key: {api_key}")  # Debug print to check API Key
 
 if not db_uri:
     st.info("Please enter the database information and URI.")
@@ -63,18 +63,24 @@ if not api_key:
 # Initialize the LLM model (backend)
 llm = ChatGroq(groq_api_key=api_key, model_name="Llama3-8b-8192", streaming=True)
 
-# Database configuration function with caching to avoid redundant connections
+# Database configuration function with error handling
 @st.cache_resource(ttl="2h")
 def configure_db(db_uri, mysql_host=None, mysql_user=None, mysql_password=None, mysql_db=None):
-    if db_uri == LOCALDB:
-        dbfilepath = (Path(__file__).parent / "student.db").absolute()
-        creator = lambda: sqlite3.connect(f"file:{dbfilepath}?mode=ro", uri=True)
-        return SQLDatabase(create_engine("sqlite:///", creator=creator))
-    elif db_uri == MYSQL:
-        if not (mysql_host and mysql_user and mysql_password and mysql_db):
-            st.error("Please provide all MySQL connection details.")
-            st.stop()
-        return SQLDatabase(create_engine(f"mysql+mysqlconnector://{mysql_user}:{mysql_password}@{mysql_host}/{mysql_db}"))
+    try:
+        if db_uri == LOCALDB:
+            dbfilepath = (Path(__file__).parent / "student.db").absolute()
+            st.write(f"Connecting to SQLite DB at: {dbfilepath}")  # Debug SQLite path
+            creator = lambda: sqlite3.connect(f"file:{dbfilepath}?mode=ro", uri=True)
+            return SQLDatabase(create_engine("sqlite:///", creator=creator))
+        elif db_uri == MYSQL:
+            if not (mysql_host and mysql_user and mysql_password and mysql_db):
+                st.error("Please provide all MySQL connection details.")
+                st.stop()
+            st.write(f"Connecting to MySQL DB at: {mysql_host}")  # Debug MySQL details
+            return SQLDatabase(create_engine(f"mysql+mysqlconnector://{mysql_user}:{mysql_password}@{mysql_host}/{mysql_db}"))
+    except Exception as e:
+        st.error(f"Error connecting to the database: {str(e)}")
+        st.stop()
 
 # Configure the database connection (cached for faster future access)
 db = configure_db(db_uri, mysql_host, mysql_user, mysql_password, mysql_db)
@@ -108,10 +114,13 @@ if user_query:
     st.chat_message("user").write(user_query)
 
     # Generate and display response from the agent
-    with st.chat_message("assistant"):
-        streamlit_callback = StreamlitCallbackHandler(st.container())
-        response = agent.run(user_query, callbacks=[streamlit_callback])
+    try:
+        with st.chat_message("assistant"):
+            streamlit_callback = StreamlitCallbackHandler(st.container())
+            response = agent.run(user_query, callbacks=[streamlit_callback])
 
-        # Add assistant's response to message history and display it
-        st.session_state.messages.append({"role": "assistant", "content": response})
-        st.write(response)
+            # Add assistant's response to message history and display it
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            st.write(response)
+    except Exception as e:
+        st.error(f"Error during query execution: {str(e)}")
