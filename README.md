@@ -71,20 +71,22 @@ Interacting with databases often requires knowledge of SQL, which can be challen
 5. **Access the application**:
    - The app will be available at `http://localhost:8501`.
 
+
 ### Running with Docker
 
-1. **Build the Docker image**:
+1. **Pull the Docker image**:
    ```bash
-   docker build -t dbquery-ai-assistant .
+   docker pull sadiq07/dbquery-ai-assistant
    ```
 
 2. **Run the Docker container**:
    ```bash
-   docker run -p 8501:8501 dbquery-ai-assistant
+   docker run -p 8501:8501 sadiq07/dbquery-ai-assistant
    ```
 
 3. **Access the application**:
    - Visit `http://localhost:8501` in your browser.
+
 
 ### MySQL Integration
 
