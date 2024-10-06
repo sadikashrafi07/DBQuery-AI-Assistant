@@ -69,7 +69,6 @@ def configure_db(db_uri, mysql_host=None, mysql_user=None, mysql_password=None, 
     try:
         if db_uri == LOCALDB:
             dbfilepath = (Path(__file__).parent / "student.db").absolute()
-            st.write(f"Connecting to SQLite DB at: {dbfilepath}")  # Debug SQLite path
             creator = lambda: sqlite3.connect(f"file:{dbfilepath}?mode=ro", uri=True)
             return SQLDatabase(create_engine("sqlite:///", creator=creator))
         elif db_uri == MYSQL:
