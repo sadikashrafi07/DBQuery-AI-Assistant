@@ -50,7 +50,7 @@ else:
 
 # Fetch the API key from environment variables
 api_key = os.getenv("GROQ_API_KEY")
-st.write(f"Loaded API Key: {api_key}")  # Debug print to check API Key
+
 
 if not db_uri:
     st.info("Please enter the database information and URI.")
