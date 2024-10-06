@@ -1,5 +1,3 @@
-
-```markdown
 # DBQuery AI Assistant
 
 **Live Link:** [DBQuery AI Assistant Demo](https://dbquery-ai-assistant-3fv7fbxkd5kekeckwejuch.streamlit.app/)
@@ -52,7 +50,7 @@ Interacting with databases often requires knowledge of SQL, which can be challen
    ```bash
    git clone https://github.com/your-repository/DBQuery-AI-Assistant.git
    cd DBQuery-AI-Assistant
-   ```
+
 
 2. **Install the required dependencies**:
    ```bash
@@ -117,4 +115,3 @@ We value your feedback and suggestions. If you have any ideas for improvement or
 ## Conclusion
 
 The **DBQuery AI Assistant** project simplifies database interactions by providing a natural language interface, enabling users to execute complex SQL queries without writing any code. The system's flexibility, efficiency, and ease of use make it a valuable tool for users who regularly interact with databases but may not have the technical expertise to write SQL.
-```
