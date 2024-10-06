@@ -7,14 +7,14 @@ from langchain_community.callbacks.streamlit import StreamlitCallbackHandler
 from sqlalchemy import create_engine
 import sqlite3
 from langchain_groq import ChatGroq
-from dotenv import load_dotenv  # Import dotenv
+from dotenv import load_dotenv
 import os
 
 # Load environment variables from the .env file
 load_dotenv()
 
 # Set page configuration with a page icon loaded from a file or fallback to an emoji
-page_icon_path =  Path("images/Page Icon.webp")
+page_icon_path = Path("images/Page Icon.webp")
 
 # Try to read the icon file, fallback to an emoji if file is not found
 try:
@@ -92,9 +92,9 @@ toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 agent = create_sql_agent(
     llm=llm,
     toolkit=toolkit,
-    verbose=False, # Disable verbose mode to reduce overhead
+    verbose=False,  # Disable verbose mode to reduce overhead
     max_iterations=40,  # Increase the number of iterations
-    max_execution_time=150 # Increase the time limit (in seconds)
+    max_execution_time=150  # Increase the time limit (in seconds)
 )
 
 # Message history handling
