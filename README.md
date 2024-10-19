@@ -1,6 +1,6 @@
 # DBQuery AI Assistant
 
-**Live Link:** [DBQuery AI Assistant Demo](https://dbquery-ai-assistant-3fv7fbxkd5kekeckwejuch.streamlit.app/)
+**Live Link:** [DBQuery AI Assistant Demo](https://dbquery-ai-assistant.streamlit.app/)
 
 ## Overview
 
