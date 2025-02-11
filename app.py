@@ -7,6 +7,7 @@ from langchain_community.callbacks.streamlit import StreamlitCallbackHandler
 from sqlalchemy import create_engine
 import sqlite3
 from langchain_groq import ChatGroq
+from urllib.parse import quote_plus
 from dotenv import load_dotenv
 import os
 
@@ -75,8 +76,9 @@ def configure_db(db_uri, mysql_host=None, mysql_user=None, mysql_password=None, 
             if not (mysql_host and mysql_user and mysql_password and mysql_db):
                 st.error("Please provide all MySQL connection details.")
                 st.stop()
+            encoded_password = quote_plus(mysql_password)  # Encode special characters
             st.write(f"Connecting to MySQL DB at: {mysql_host}")  # Debug MySQL details
-            return SQLDatabase(create_engine(f"mysql+mysqlconnector://{mysql_user}:{mysql_password}@{mysql_host}/{mysql_db}"))
+            return SQLDatabase(create_engine(f"mysql+mysqlconnector://{mysql_user}:{encoded_password}@{mysql_host}/{mysql_db}"))
     except Exception as e:
         st.error(f"Error connecting to the database: {str(e)}")
         st.stop()
